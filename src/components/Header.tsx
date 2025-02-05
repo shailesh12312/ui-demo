@@ -1,6 +1,9 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+
 const Arrow = '/images/arrow.svg';
+
 interface NavItem {
     text: string
     href: string
@@ -131,24 +134,26 @@ const Header = () => {
                                 />
                             </defs>
                             {navItems.map((item, index) => (
-                                <text
+                                <motion.text
                                     key={item.text}
                                     fontSize="14"
                                     fontWeight="500"
-                                    fill="currentColor"
-                                    className={`transition-all duration-500 ease-out ${index === selectedIndex ? "fill-black" : "fill-[#BCB7B7]"} hover:fill-black`}
+                                    initial={{ fill: index === selectedIndex ? "#000000" : "#BCB7B7" }}
+                                    animate={{ fill: index === selectedIndex ? "#000000" : "#BCB7B7" }}
+                                    whileHover={{ fill: "#000000" }}
+                                    transition={{ duration: 0.3 }}
                                     onClick={() => handleClick(index)}
                                 >
-
-                                    <textPath
+                                    <motion.textPath
                                         href="#reverseCurvePath"
                                         startOffset={`${getPosition(index)}%`}
                                         textAnchor="middle"
-                                        className="transition-all duration-500 ease-out"
+                                        animate={{ startOffset: `${getPosition(index)}%` }}
+                                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
                                     >
                                         {item.text}
-                                    </textPath>
-                                </text>
+                                    </motion.textPath>
+                                </motion.text>
                             ))}
                         </svg>
                     </div>
